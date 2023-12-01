@@ -31,7 +31,7 @@ class BookController extends Controller
         Books::create([
             'title' => $request->title,
             'author' => $request->author,
-            'published_date' => $request->publish_date
+            'publish_date' => $request->publish_date
         ]);
         return response()->json([
             "message" => "Book successfully added."
@@ -70,7 +70,7 @@ class BookController extends Controller
 
         if (Books::where('id', $id)->exists()) {
 
-            $book = Books::findOrFail($id);
+            $book = Books::find($id);
 
             Books::where('id', $id)->update([
                 'title' => is_null($request->title) ? $book->title : $request->title,
@@ -80,7 +80,7 @@ class BookController extends Controller
 
             return response()->json([
                 "message" => "Book updated successfully"
-            ], 204);
+            ], 200);
         } else {
             return response()->json([
                 "message" => "Book not found"
